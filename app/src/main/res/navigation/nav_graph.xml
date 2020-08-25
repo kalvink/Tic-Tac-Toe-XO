@@ -7,22 +7,16 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.kalvinkao.tictactoe.FirstFragment"
+        android:name="com.kalvinkao.tictactoe.FirstMenu"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_menu"/>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.kalvinkao.tictactoe.SecondFragment"
+        android:name="com.kalvinkao.tictactoe.SecondMenu"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_menu_two"/>
+    <fragment
+        android:id="@+id/gamePvP"
+        android:name="com.kalvinkao.tictactoe.GamePVP"
+        android:label="@string/gamepvp_label" />
 </navigation>

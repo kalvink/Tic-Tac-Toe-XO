@@ -2,6 +2,8 @@ package com.kalvinkao.tictactoe;
 
 import android.os.Bundle;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -13,7 +15,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/*ALL CODE COPYRIGHTED TO KALVIN KAO
+ * https://github.com/kalvink
+ */
 public class MainActivity extends AppCompatActivity {
+    public static boolean ads_on = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +28,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+        AdView mAdViewBot = findViewById(R.id.adViewBot);
+        //AdView mAdViewSide = findViewById(R.id.adViewSide);
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        if (ads_on) {
+   //         mAdViewBot.loadAd(adRequest);
+          //  mAdViewSide.loadAd(adRequest);
+        }
     }
 
     @Override
