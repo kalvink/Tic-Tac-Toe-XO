@@ -19,6 +19,8 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import org.w3c.dom.Text;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -28,9 +30,9 @@ public class GameCPU extends Fragment {
     static boolean Xwin = false;
     static boolean Owin = false;
     static boolean draw = false;
-    int Xwin_count = 0;
-    int Owin_count = 0;
-    int draw_count = 0;
+    static int Xwin_count = 0;
+    static int Owin_count = 0;
+    static int draw_count = 0;
     static int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     static final int[][] grid = new int[3][3];
 
@@ -75,7 +77,6 @@ public class GameCPU extends Fragment {
             //  mAdViewSide.loadAd(adRequest);
         }
 
-
         //Back Btn
         btn_back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -86,6 +87,9 @@ public class GameCPU extends Fragment {
                 fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, mFragment).addToBackStack(null).commit();
                 enableGame(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
                 playerX[0] = true;
+                draw_count = 0;
+                Xwin_count = 0;
+                Owin_count = 0;
             }
         });
 
@@ -103,10 +107,13 @@ public class GameCPU extends Fragment {
                 btn1.setClickable(false);
                 if (checkWins(txt_Xwins, txt_Owins, txt_ties, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)) {
                     endGame(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
-                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back);
-
+                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back, txt_Xwins, txt_Owins, txt_ties);
                 }
-                botNextMove(array, grid, 0, 0, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
+                try {
+                    botNextMove(array, grid, 0, 0, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_Xwins, txt_Owins, txt_ties, btn_back);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         btn2.setOnClickListener(new View.OnClickListener() {
@@ -119,14 +126,16 @@ public class GameCPU extends Fragment {
                     txt_turn.setText("Bot (O)'s Turn");
                     array[1] = 0;
                 }
-
                 btn2.setClickable(false);
                 if (checkWins(txt_Xwins, txt_Owins, txt_ties, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)) {
                     endGame(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
-                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back);
-
+                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back, txt_Xwins, txt_Owins, txt_ties);
                 }
-                botNextMove(array, grid, 0, 1, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
+                try {
+                    botNextMove(array, grid, 0, 1, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_Xwins, txt_Owins, txt_ties, btn_back);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -143,9 +152,13 @@ public class GameCPU extends Fragment {
                 btn3.setClickable(false);
                 if (checkWins(txt_Xwins, txt_Owins, txt_ties, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)) {
                     endGame(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
-                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back);
+                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back, txt_Xwins, txt_Owins, txt_ties);
                 }
-                botNextMove(array, grid, 0, 2, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
+                try {
+                    botNextMove(array, grid, 0, 2, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_Xwins, txt_Owins, txt_ties, btn_back);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -158,14 +171,17 @@ public class GameCPU extends Fragment {
                     playerX[0] = false;
                     grid[1][0] = 0;
                     array[3] = 0;
-                    botNextMove(array, grid, 1, 0, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
                 }
                 btn4.setClickable(false);
                 if (checkWins(txt_Xwins, txt_Owins, txt_ties, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)) {
                     endGame(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
-                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back);
+                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back, txt_Xwins, txt_Owins, txt_ties);
                 }
-                botNextMove(array, grid, 1, 0, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
+                try {
+                    botNextMove(array, grid, 1, 0, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_Xwins, txt_Owins, txt_ties, btn_back);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -182,10 +198,13 @@ public class GameCPU extends Fragment {
                 btn5.setClickable(false);
                 if (checkWins(txt_Xwins, txt_Owins, txt_ties, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)) {
                     endGame(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
-                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back);
-
+                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back, txt_Xwins, txt_Owins, txt_ties);
                 }
-                botNextMove(array, grid, 1, 1, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
+                try {
+                    botNextMove(array, grid, 1, 1, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_Xwins, txt_Owins, txt_ties, btn_back);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -202,10 +221,14 @@ public class GameCPU extends Fragment {
                 btn6.setClickable(false);
                 if (checkWins(txt_Xwins, txt_Owins, txt_ties, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)) {
                     endGame(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
-                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back);
+                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back, txt_Xwins, txt_Owins, txt_ties);
 
                 }
-                botNextMove(array, grid, 1, 2, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
+                try {
+                    botNextMove(array, grid, 1, 2, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_Xwins, txt_Owins, txt_ties, btn_back);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         btn7.setOnClickListener(new View.OnClickListener() {
@@ -221,10 +244,14 @@ public class GameCPU extends Fragment {
                 btn7.setClickable(false);
                 if (checkWins(txt_Xwins, txt_Owins, txt_ties, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)) {
                     endGame(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
-                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back);
+                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back, txt_Xwins, txt_Owins, txt_ties);
 
                 }
-                botNextMove(array, grid, 2, 0, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
+                try {
+                    botNextMove(array, grid, 2, 0, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_Xwins, txt_Owins, txt_ties, btn_back);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -241,9 +268,13 @@ public class GameCPU extends Fragment {
                 btn8.setClickable(false);
                 if (checkWins(txt_Xwins, txt_Owins, txt_ties, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)) {
                     endGame(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
-                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back);
+                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back, txt_Xwins, txt_Owins, txt_ties);
                 }
-                botNextMove(array, grid, 2, 1, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
+                try {
+                    botNextMove(array, grid, 2, 1, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_Xwins, txt_Owins, txt_ties, btn_back);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -260,11 +291,15 @@ public class GameCPU extends Fragment {
                 btn9.setClickable(false);
                 if (checkWins(txt_Xwins, txt_Owins, txt_ties, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)) {
                     endGame(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
-                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back);
+                    popupWindow(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_turn, btn_back, txt_Xwins, txt_Owins, txt_ties);
 
 
                 }
-                botNextMove(array, grid, 2, 2, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9);
+                try {
+                    botNextMove(array, grid, 2, 2, txt_turn, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, txt_Xwins, txt_Owins, txt_ties, btn_back);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -273,7 +308,7 @@ public class GameCPU extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    public void popupWindow(final Button a, final Button b, final Button c, final Button d, final Button e, final Button f, final Button g, final Button h, final Button i, final TextView turn, final Button btn_back) {
+    public void popupWindow(final Button a, final Button b, final Button c, final Button d, final Button e, final Button f, final Button g, final Button h, final Button i, final TextView turn, final Button btn_back, final TextView txt_Xwins, final TextView txt_Owins, final TextView txt_ties) {
         View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.endgame, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
@@ -284,14 +319,17 @@ public class GameCPU extends Fragment {
 
         if (Xwin) {
             popup_msg.setText("PLAYER 1 WINS");
+            playerX[0] = false;
         } else if (Owin) {
             popup_msg.setText("BOT WINS");
+            playerX[0] = true;
         } else {
             popup_msg.setText("DRAW");
         }
         btn_back.setClickable(false);
         Button new_game = popupView.findViewById(R.id.btn_newgame);
         new_game.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             public void onClick(View v) {
                 if (playerX[0]) {
                     turn.setText("Player 1 (X)'s Turn");
@@ -300,12 +338,19 @@ public class GameCPU extends Fragment {
                 enableGame(a, b, c, d, e, f, g, h, i);
                 popupWindow.dismiss();
                 btn_back.setClickable(true);
+                if (!playerX[0]) {
+                    try {
+                        botNextMove(array, grid, 0, 0, turn, a, b, c, d, e, f, g, h, i, txt_Xwins, txt_Owins, txt_ties, btn_back);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
             }
         });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public boolean checkWins(TextView txta, TextView txtb, TextView txtc, Button a, Button b, Button c, Button d, Button e, Button f, Button g, Button h, Button i) {
+    public static boolean checkWins(TextView txta, TextView txtb, TextView txtc, Button a, Button b, Button c, Button d, Button e, Button f, Button g, Button h, Button i) {
         //Check for horizontal wins
         boolean endGame = false;
 
@@ -408,6 +453,7 @@ public class GameCPU extends Fragment {
             Owin_count++;
             txtb.setText(String.valueOf(Owin_count));
             endGame = true;
+            playerX[0] = false;
         } else if (draw) {
             draw_count++;
             txtc.setText(String.valueOf(draw_count));
@@ -418,7 +464,7 @@ public class GameCPU extends Fragment {
     }
 
     //Check Ties
-    public boolean checkTies(int val) {
+    public static boolean checkTies(int val) {
         for (int[] ints : grid) {
             for (int anInt : ints) {
                 if (anInt == val) return true;
@@ -476,7 +522,9 @@ public class GameCPU extends Fragment {
         }
     }
 
-    public static void botNextMove(int[] array, int grid[][], int pressed1, int pressed2, TextView txt_turn, Button a, Button b, Button c, Button d, Button e, Button f, Button g, Button h, Button i) {
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void botNextMove(int[] array, int grid[][], int pressed1, int pressed2, TextView txt_turn, Button a, Button b, Button c, Button d, Button e, Button f, Button g, Button h, Button i, TextView txta, TextView txtb, TextView txtc, Button btn_back) throws InterruptedException {
         if (!Xwin && !draw) {
             int randNum = randomize(9, 1);
             //check if grid btn is clicked
@@ -486,14 +534,10 @@ public class GameCPU extends Fragment {
                 while (array[randNum - 1] == 0) {
                     randNum = randomize(9, 1);
                 }
-            } else if (grid[pressed1][pressed2] == 1) {
-                randNum = randomize(9, 1);
-                while (array[randNum - 1] == 0) {
-                    randNum = randomize(9, 1);
-                }
             }
 
             if (randNum == 1) {
+                Thread.sleep(250);
                 txt_turn.setText("Player 1 (X)'s Turn");
                 a.setText("O");
                 playerX[0] = true;
@@ -501,6 +545,7 @@ public class GameCPU extends Fragment {
                 grid[0][0] = 1;
                 array[0] = 0;
             } else if (randNum == 2) {
+                Thread.sleep(250);
                 txt_turn.setText("Player 1 (X)'s Turn");
                 b.setText("O");
                 playerX[0] = true;
@@ -508,6 +553,7 @@ public class GameCPU extends Fragment {
                 grid[0][1] = 1;
                 array[1] = 0;
             } else if (randNum == 3) {
+                Thread.sleep(250);
                 txt_turn.setText("Player 1 (X)'s Turn");
                 c.setText("O");
                 playerX[0] = true;
@@ -515,6 +561,7 @@ public class GameCPU extends Fragment {
                 grid[0][2] = 1;
                 array[2] = 0;
             } else if (randNum == 4) {
+                Thread.sleep(250);
                 txt_turn.setText("Player 1 (X)'s Turn");
                 d.setText("O");
                 playerX[0] = true;
@@ -522,6 +569,7 @@ public class GameCPU extends Fragment {
                 grid[1][0] = 1;
                 array[3] = 0;
             } else if (randNum == 5) {
+                Thread.sleep(250);
                 txt_turn.setText("Player 1 (X)'s Turn");
                 e.setText("O");
                 playerX[0] = true;
@@ -530,6 +578,7 @@ public class GameCPU extends Fragment {
                 array[4] = 0;
 
             } else if (randNum == 6) {
+                Thread.sleep(250);
                 txt_turn.setText("Player 1 (X)'s Turn");
                 f.setText("O");
                 playerX[0] = true;
@@ -537,6 +586,7 @@ public class GameCPU extends Fragment {
                 grid[1][2] = 1;
                 array[5] = 0;
             } else if (randNum == 7) {
+                Thread.sleep(250);
                 txt_turn.setText("Player 1 (X)'s Turn");
                 g.setText("O");
                 playerX[0] = true;
@@ -544,6 +594,7 @@ public class GameCPU extends Fragment {
                 grid[2][0] = 1;
                 array[6] = 0;
             } else if (randNum == 8) {
+                Thread.sleep(250);
                 txt_turn.setText("Player 1 (X)'s Turn");
                 h.setText("O");
                 playerX[0] = true;
@@ -551,6 +602,7 @@ public class GameCPU extends Fragment {
                 grid[2][1] = 1;
                 array[7] = 0;
             } else if (randNum == 9) {
+                Thread.sleep(250);
                 txt_turn.setText("Player 1 (X)'s Turn");
                 i.setText("O");
                 playerX[0] = true;
@@ -558,8 +610,14 @@ public class GameCPU extends Fragment {
                 grid[2][2] = 1;
                 array[8] = 0;
             }
+            if (checkWins(txta, txtb, txtc, a, b, c, d, e, f, g, h, i)) {
+                endGame(a, b, c, d, e, f, g, h, i);
+                popupWindow(a, b, c, d, e, f, g, h, i, txt_turn, btn_back, txta, txtb, txtc);
+
+            }
 
         }
+
     }
 
 
