@@ -9,7 +9,8 @@
     <string name="PLAY">PLAY</string>
     <string name="previous">Previous</string>
 
-    <string name="Title">TIC TAC TOE XO</string>
+    <string name="Title1">TIC TAC TOE</string>
+    <string name="Title2">XO</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <!--test: ca-app-pub-3940256099942544/6300978111-->
