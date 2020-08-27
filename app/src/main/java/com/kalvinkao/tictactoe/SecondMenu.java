@@ -24,6 +24,7 @@ public class SecondMenu extends Fragment {
 
         final Button btn_back = root.findViewById(R.id.btn_back);
         final Button btn_vs2player = root.findViewById(R.id.btn_vs2player);
+        final Button btn_vscpu = root.findViewById(R.id.btn_vscpu);
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -37,6 +38,14 @@ public class SecondMenu extends Fragment {
             public void onClick(View v) {
                 Fragment mFragment = null;
                 mFragment = new GamePVP();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, mFragment).addToBackStack(null).commit();
+            }
+        });
+        btn_vscpu.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Fragment mFragment = null;
+                mFragment = new GameCPU();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, mFragment).addToBackStack(null).commit();
             }
