@@ -60,4 +60,20 @@
         android:text="@string/PLAY"
         android:textSize="50sp" />
 
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <Button
+        android:id="@+id/btn_lb"
+        android:layout_width="224dp"
+        android:layout_height="68dp"
+        android:layout_gravity="center"
+        android:background="#FFFFFF"
+        android:text="@string/leaderboard"
+        android:textSize="28sp" />
+
+
+
 </LinearLayout>

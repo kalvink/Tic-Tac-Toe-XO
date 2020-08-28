@@ -15,6 +15,13 @@
 
     <!--test: ca-app-pub-3940256099942544/6300978111-->
     <string name="ad_unit_id" translatable="false">ca-app-pub-8016302998575950/5379291019</string>
+    <string name="leaderboard">LEADERBOARD</string>
+    <string name="online">online</string>
+    <string name="vs_computer">vs computer</string>
+    <string name="_2_player">2 player</string>
+    <string name="back">Back</string>
+    <string name="matchmaking">matchmaking</string>
+    <string name="profile">profile</string>
 
 
 </resources>

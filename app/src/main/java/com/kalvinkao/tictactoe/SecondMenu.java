@@ -6,10 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.navigation.fragment.NavHostFragment;
 
 public class SecondMenu extends Fragment {
 
@@ -25,6 +23,8 @@ public class SecondMenu extends Fragment {
         final Button btn_back = root.findViewById(R.id.btn_back);
         final Button btn_vs2player = root.findViewById(R.id.btn_vs2player);
         final Button btn_vscpu = root.findViewById(R.id.btn_vscpu);
+        final Button btn_online = root.findViewById(R.id.btn_online);
+
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -50,7 +50,14 @@ public class SecondMenu extends Fragment {
                 fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, mFragment).addToBackStack(null).commit();
             }
         });
-
+        btn_online.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Fragment mFragment = null;
+                mFragment = new Login();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, mFragment).addToBackStack(null).commit();
+            }
+        });
         return root;
     }
 
