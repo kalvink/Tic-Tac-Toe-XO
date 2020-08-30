@@ -30,8 +30,8 @@ public class Leaderboard extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 if (fm.getBackStackEntryCount() > 0) {
                     fm.popBackStack();
-                }
 
+                }
 
             }
         });

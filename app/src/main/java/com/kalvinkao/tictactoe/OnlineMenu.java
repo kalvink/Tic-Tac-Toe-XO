@@ -1,5 +1,6 @@
 package com.kalvinkao.tictactoe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,10 +44,8 @@ public class OnlineMenu extends Fragment {
         });
         btn_profile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Fragment mFragment = null;
-                mFragment = new Profile();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, mFragment).addToBackStack(null).commit();
+                Intent intent = new Intent(getActivity(), Profile.class);
+                startActivity(intent);
             }
         });
         btn_lb.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,6 @@
 package com.kalvinkao.tictactoe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class SecondMenu extends Fragment {
 
@@ -52,10 +54,13 @@ public class SecondMenu extends Fragment {
         });
         btn_online.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Fragment mFragment = null;
-                mFragment = new Login();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, mFragment).addToBackStack(null).commit();
+                Intent intent = new Intent(getActivity(), Login.class);
+                startActivity(intent);
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.addToBackStack(SecondMenu.class.getName()).commit();
+                fm.executePendingTransactions();
+
             }
         });
         return root;
