@@ -20,10 +20,83 @@
             android:text="@string/back"
             android:textSize="20sp" />
 
-        <ListView
+        <View
+            android:id="@+id/divider11"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF" />
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/searching"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SEARCHING..."
+            android:textSize="40sp"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            />
+
+        <View
+            android:id="@+id/divider10"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/players_searching"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PLAYERS SEARCHING: 0"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            />
+
+        <View
+            android:id="@+id/divider9"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/queue_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Queue Time:"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/queue_time2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:text="0:00"
+            android:textSize="30sp" />
+
+        <View
+            android:id="@+id/divider12"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/estimated_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estimated Time: "
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/estimated_time3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:text="0:00"
+            android:textSize="30sp" />
+
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,12 +1,11 @@
 package com.kalvinkao.tictactoe;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,21 +21,31 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Profile extends FragmentActivity {
 
     GoogleSignInClient mGoogleSignInClient;
-    Button sign_out, btn_back, lb, mm;
+    @SuppressLint("StaticFieldLeak")
+    static Button sign_out, lb, mm;
+    Button btn_back;
     TextView nameTV;
     ImageView photoIV;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_profile);
-
 
         sign_out = findViewById(R.id.log_out);
         mm = findViewById(R.id.btn_mm);
@@ -58,9 +67,8 @@ public class Profile extends FragmentActivity {
         if (acct != null) {
             String personName = acct.getGivenName();
             Uri personPhoto = acct.getPhotoUrl();
-
             nameTV.setText(personName);
-
+            writeNewUser(acct.getId(), personName);
             Glide.with(this).load(personPhoto).into(photoIV);
         }
 
@@ -74,8 +82,13 @@ public class Profile extends FragmentActivity {
         mm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                if (savedInstanceState == null) {
+                    getSupportFragmentManager().beginTransaction().addToBackStack(Profile.class.getName())
+                            .add(android.R.id.content, new Matchmaking()).commit();
+                }
+                mm.setClickable(false);
+                lb.setClickable(false);
+                sign_out.setClickable(false);
             }
         });
 
@@ -86,8 +99,30 @@ public class Profile extends FragmentActivity {
                     getSupportFragmentManager().beginTransaction().addToBackStack(Profile.class.getName())
                             .add(android.R.id.content, new Leaderboard()).commit();
                 }
+                sign_out.setClickable(false);
             }
         });
+    }
+
+    private void writeNewUser(String userId, String name) {
+        Map<String, Object> user = new HashMap<>();
+        user.put("Name", name);
+        user.put("User ID", userId);
+
+        db.collection("users").document(userId)
+                .set(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("TAG", "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAG", "Error writing document", e);
+                    }
+                });
     }
 
     private void signOut() {
