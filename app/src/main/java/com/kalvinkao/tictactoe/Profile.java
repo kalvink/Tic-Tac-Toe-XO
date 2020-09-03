@@ -1,6 +1,7 @@
 package com.kalvinkao.tictactoe;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -13,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -27,17 +30,20 @@ import com.google.android.gms.tasks.Task;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Profile extends FragmentActivity {
+    FragmentManager fm = getSupportFragmentManager();
+
+    static int players_online = 0;
+    static int players_searching = 0;
 
     GoogleSignInClient mGoogleSignInClient;
     @SuppressLint("StaticFieldLeak")
     static Button sign_out, lb, mm;
     Button btn_back;
-    TextView nameTV;
+    TextView nameTV, online;
     ImageView photoIV;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -53,6 +59,7 @@ public class Profile extends FragmentActivity {
         nameTV = findViewById(R.id.name);
         photoIV = findViewById(R.id.photo);
         btn_back = findViewById(R.id.btn_back);
+        online = findViewById(R.id.textonline);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -70,12 +77,29 @@ public class Profile extends FragmentActivity {
             nameTV.setText(personName);
             writeNewUser(acct.getId(), personName);
             Glide.with(this).load(personPhoto).into(photoIV);
+            players_online++;
         }
 
         sign_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signOut();
+                new AlertDialog.Builder(Profile.this)
+                        .setTitle("Signing out")
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                // The user wants to leave - so dismiss the dialog and exit
+                                signOut();
+                                dialog.dismiss();
+                            }
+                        }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // The user is not sure, so you can exit or just stay
+                        dialog.dismiss();
+                    }
+                }).show();
+
+
             }
         });
 
@@ -83,7 +107,7 @@ public class Profile extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 if (savedInstanceState == null) {
-                    getSupportFragmentManager().beginTransaction().addToBackStack(Profile.class.getName())
+                    fm.beginTransaction().addToBackStack(Profile.class.getName())
                             .add(android.R.id.content, new Matchmaking()).commit();
                 }
                 mm.setClickable(false);
@@ -96,7 +120,7 @@ public class Profile extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 if (savedInstanceState == null) {
-                    getSupportFragmentManager().beginTransaction().addToBackStack(Profile.class.getName())
+                    fm.beginTransaction().addToBackStack(Profile.class.getName())
                             .add(android.R.id.content, new Leaderboard()).commit();
                 }
                 sign_out.setClickable(false);
@@ -126,6 +150,7 @@ public class Profile extends FragmentActivity {
     }
 
     private void signOut() {
+
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
@@ -133,7 +158,36 @@ public class Profile extends FragmentActivity {
                         Toast.makeText(Profile.this, "Successfully signed out", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Profile.this, Login.class));
                         finish();
+                        players_online--;
                     }
                 });
     }
+
+    @Override
+    public void onBackPressed() {
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        } else {
+            new AlertDialog.Builder(Profile.this)
+                    .setTitle("Signing out")
+                    .setMessage("Are you sure?")
+                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // The user wants to leave - so dismiss the dialog and exit
+                            signOut();
+                            dialog.dismiss();
+                        }
+                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    // The user is not sure, so you can exit or just stay
+                    dialog.dismiss();
+                }
+            }).show();
+
+        }
+        mm.setClickable(true);
+        lb.setClickable(true);
+        sign_out.setClickable(true);
+    }
+
 }

@@ -2,22 +2,17 @@ package com.kalvinkao.tictactoe;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import static com.google.common.collect.ComparisonChain.start;
-
 public class Matchmaking extends Fragment {
 
-    Handler timerHandler = new Handler();
 
     @Override
     public View onCreateView(
@@ -28,14 +23,14 @@ public class Matchmaking extends Fragment {
         View root = inflater.inflate(R.layout.fragment_matchmaking, container, false);
         // Inflate the layout for this fragment
         final Button btn_back = root.findViewById(R.id.btn_back);
-        TextView players_search = root.findViewById(R.id.players_searching);
+        final TextView players_search = root.findViewById(R.id.players_searching);
         TextView e_time = root.findViewById(R.id.estimated_time3);
         final TextView q_time = root.findViewById(R.id.queue_time2);
+        final TextView players_online = root.findViewById(R.id.players_online);
         final TextView search = root.findViewById(R.id.searching);
 
-
         Thread thread = new Thread() {
-            @SuppressLint("DefaultLocale")
+            @SuppressLint({"DefaultLocale", "SetTextI18n"})
             @Override
             public void run() {
                 int seconds = 0;
@@ -66,6 +61,8 @@ public class Matchmaking extends Fragment {
                         seconds = 0;
                     }
                     q_time.setText(String.format("%d:%02d", minutes, seconds));
+                    players_search.setText("PLAYERS SEARCHING: " + Profile.players_searching);
+                    players_online.setText("(Online: " + Profile.players_online + ")");
                 }
             }
         };
@@ -91,5 +88,7 @@ public class Matchmaking extends Fragment {
         return root;
 
     }
+
+
 
 }
