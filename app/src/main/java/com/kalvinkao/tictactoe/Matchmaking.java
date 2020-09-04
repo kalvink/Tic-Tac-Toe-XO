@@ -68,7 +68,6 @@ public class Matchmaking extends Fragment {
         };
         thread.start();
 
-
         btn_back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -88,7 +87,5 @@ public class Matchmaking extends Fragment {
         return root;
 
     }
-
-
 
 }
