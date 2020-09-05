@@ -1,6 +1,6 @@
 # Tic Tac Toe XO
 Play Tic Tac Toe against another person or a bot. One of the fastest, fun and free tic tac toe games.
-https://play.google.com/store/apps/details?id=com.kalvinkao.tictactoe
+<br>https://play.google.com/store/apps/details?id=com.kalvinkao.tictactoe
 
 Tools used:
 - Android Studio
