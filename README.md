@@ -8,6 +8,13 @@ Tools used:
 Languages:
 - Java
 
+Unimplemented features that are in the code:
+- Firebase cloud firestore
+- Sign in with google accounts
+- Add and modify firestore database
+
+*Could not get matchmaking to work so took out the online features
+
 ![IMG1](https://lh3.googleusercontent.com/q-iUL2S6ImkyVu2j0yVRbqN2IWPq2LsK0kc526oSrlh7ckumrfG7-1gRoX36fAwfRg=w720-h310-rw)
 ![IMG2](https://lh3.googleusercontent.com/lrxEYQNhD6xX-CH7QEjBkZ-U-YvD5VBWL0Z3xhFN4UeRVyyM6o2f4uqeQYBkb4oGXO1w=w720-h310-rw)
 ![IMG3](https://lh3.googleusercontent.com/79Mr-eeKSKyaiv5rdx2PV5Vx-T7GveteT5wZHSRTvArq_Zldjv8BNx7Mt2XOjOa17A=w720-h310-rw)
