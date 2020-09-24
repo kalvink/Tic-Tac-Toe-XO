@@ -13,7 +13,7 @@ Unimplemented features that are in the code:
 - Sign in with google accounts
 - Add and modify firestore database
 
-*Could not get matchmaking to work so took out the online features
+*Could not get matchmaking to work so took out the online features until I figure it out
 
 ![IMG1](https://lh3.googleusercontent.com/q-iUL2S6ImkyVu2j0yVRbqN2IWPq2LsK0kc526oSrlh7ckumrfG7-1gRoX36fAwfRg=w720-h310-rw)
 ![IMG2](https://lh3.googleusercontent.com/lrxEYQNhD6xX-CH7QEjBkZ-U-YvD5VBWL0Z3xhFN4UeRVyyM6o2f4uqeQYBkb4oGXO1w=w720-h310-rw)
